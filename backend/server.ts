@@ -6,5 +6,5 @@ import { PORT } from "./utils/constants";
 import logger from "./utils/logger";
 
 app.listen(PORT, function() {
-  logger.info("Successfully connected to port 4000");
+  logger.info("Successfully connected");
 });
