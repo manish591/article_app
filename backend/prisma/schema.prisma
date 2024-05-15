@@ -15,4 +15,24 @@ datasource db {
 
 model User {
   id Int @id @default(autoincrement())
+  first_name String
+  last_name String?
+  username String @unique
+  email String @unique
+  avatar String?
+  bio String?
+  created_at DateTime
+  updated_at DateTime
+  article Article[]
+}
+
+model Article {
+  id Int @id @default(autoincrement())
+  title String
+  subtitle String?
+  content String?
+  created_at DateTime
+  updated_at DateTime
+  user_id Int
+  author User @relation(fields: [user_id], references: [id])
 }
