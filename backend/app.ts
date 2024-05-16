@@ -1,7 +1,8 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import logger from "./utils/logger";
+import router from "./routes";
 
 const app = express();
 
@@ -20,10 +21,6 @@ app.use(morgan("combined", {
   }
 }));
 
-app.get("/healthcheck", function (req: Request, res: Response) {
-  res.json({
-    uptime: new Date(),
-  });
-});
+app.use("/api/v1", router);
 
 export default app;
