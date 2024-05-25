@@ -1,11 +1,8 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import healthCheckController from "../controllers/healthcheck";
 
 const router = Router();
 
-router.get("/", function(req: Request, res: Response) {
-  res.json({
-    uptime: new Date(),
-  });
-});
+router.get("/", healthCheckController.healthcheck);
 
 export default router;
