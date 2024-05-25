@@ -2,14 +2,15 @@ import { Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
 import { JwtPayload } from "jsonwebtoken";
 import { verifyJwt } from "../utils/jwt";
+import logger from "../utils/logger";
 
 const prisma = new PrismaClient();
 
 async function authenticate(req: Request, res: Response, next: NextFunction) {
   try {
-    const token = req.headers.authorization;
+    const authParts = req.headers.authorization?.split(" ");
 
-    if(!token || token.split(" ").length < 2 || token.split(" ")[1]) {
+    if(!authParts || authParts.length != 2 || authParts[0] != "Bearer" || !authParts[1]) {
       return res.status(401).json({
         status: "error",
         code: 401,
@@ -19,9 +20,10 @@ async function authenticate(req: Request, res: Response, next: NextFunction) {
       });
     }
 
-    const userData: JwtPayload = verifyJwt(token);
+    const token = authParts[1];
+    const userData = verifyJwt(token) as JwtPayload;
 
-    if(!userData.id) {
+    if(!userData || !userData.id) {
       return res.status(401).json({
         status: "error",
         code: 401,
@@ -50,6 +52,7 @@ async function authenticate(req: Request, res: Response, next: NextFunction) {
     res.locals.user = user;
     next();
   } catch(err) {
+    logger.error("the error", err);
     res.status(500).json({
       status: "error",
       code: 500,

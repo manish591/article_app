@@ -7,7 +7,7 @@ function signJwt(payload: JwtPayload) {
   });
 }
 
-async function verifyJwt(token: string) {
+function verifyJwt(token: string) {
   return jwt.verify(token, ACCESS_TOKEN_SECRET);
 }
 
