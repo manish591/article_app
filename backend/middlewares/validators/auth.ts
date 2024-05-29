@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"; 
-import logger from "../../utils/logger";
 import zod from "zod";
+import logger from "../../utils/logger";
 
 async function validateSignupData(req: Request, res: Response, next: NextFunction) {
   try {

@@ -84,8 +84,50 @@ async function getUserByUsername(req: Request, res: Response) {
   }
 }
 
-async function updateSelfDetails() {
+async function updateSelfDetails(req: Request, res: Response) {
+  try {
+    const userDataToUpdate = req.body;
 
+    if(Object.entries(userDataToUpdate).length <= 0) {
+      return res.status(400).json({
+        status: "error",
+        code: 400,
+        message: "please provide data to update",
+        data: {},
+        meta: {}
+      });
+    }
+
+    const updatedData = await prisma.user.update({
+      data: {
+        ...userDataToUpdate
+      },
+      where: {
+        id: res.locals.user.id
+      }
+    });
+
+    const sanitizeUserData = sanitizeData(updatedData, ["email", "password"]);
+
+    res.status(202).json({
+      status: "success",
+      code: 202,
+      message: "update user data successfully",
+      data: {
+        ...sanitizeUserData
+      },
+      meta: {},
+    });
+  } catch(err) {
+    logger.error("Internal server error occured", err);
+    res.status(500).json({
+      status: "error",
+      code: 500,
+      message: "Internal server error occured",
+      data: {},
+      meta: {}
+    });
+  }
 }
 
 async function deleteSelfAccount() {
