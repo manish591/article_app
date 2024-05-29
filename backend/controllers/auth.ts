@@ -121,7 +121,7 @@ async function singin(req: Request, res: Response) {
       meta: {},
     });
   } catch(err) {
-    logger.error("failed to signin, internal server error");
+    logger.error("failed to signin, internal server error", err);
     res.status(500).json({
       status: "error",
       code: 500,
