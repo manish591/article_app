@@ -23,7 +23,7 @@ async function authenticate(req: Request, res: Response, next: NextFunction) {
     const token = authParts[1];
     const userData = verifyJwt(token) as JwtPayload;
 
-    if(!userData || !userData.id) {
+    if(!userData?.id) {
       return res.status(401).json({
         status: "error",
         code: 401,
