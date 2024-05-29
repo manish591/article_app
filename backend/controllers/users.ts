@@ -5,7 +5,7 @@ import { sanitizeData } from "../utils/sanitizeUser";
 async function getSelfDetails(req: Request, res: Response) {
   try {
     const user = res.locals.user;
-    const sanitizedUser = sanitizeData(user, ["email", "password", "r"]);
+    const sanitizedUser = sanitizeData(user, ["email", "password"]);
 
     res.status(200).json({
       status: "success",
