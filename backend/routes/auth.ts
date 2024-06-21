@@ -1,11 +1,11 @@
 import { Router } from "express";
-import authValidator from "../middlewares/validators/auth";
-import authController from "../controllers/auth";
+import validator from "../middlewares/validators/auth";
+import controller from "../controllers/auth";
 
 const router = Router();
 
-router.post("/signup", authValidator.validateSignupData, authController.signup);
-router.post("/signin", authValidator.validateSigninData, authController.singin);
-router.get("/signout", authController.signout);
+router.get("/signout", controller.signout);
+router.post("/signup", validator.validateSignupData, controller.signup);
+router.post("/signin", validator.validateSigninData, controller.singin);
 
 export default router;

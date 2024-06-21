@@ -130,13 +130,8 @@ async function updateSelfDetails(req: Request, res: Response) {
   }
 }
 
-async function deleteSelfAccount() {
-
-}
-
 export default {
   getSelfDetails,
   getUserByUsername,
-  updateSelfDetails,
-  deleteSelfAccount
+  updateSelfDetails
 };

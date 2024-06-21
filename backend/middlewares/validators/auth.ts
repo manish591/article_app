@@ -9,7 +9,7 @@ async function validateSignupData(req: Request, res: Response, next: NextFunctio
       last_name: zod.string(),
       email: zod.string().email(),
       password: zod.string().min(6)
-    });
+    }).strict();
     await schema.parseAsync(req.body);
     next();
   } catch(err) {
@@ -29,7 +29,7 @@ async function validateSigninData(req: Request, res: Response, next: NextFunctio
     const schema = zod.object({
       email: zod.string().email(),
       password: zod.string().min(6)
-    });
+    }).strict();
 
     await schema.parseAsync(req.body);
     next();
